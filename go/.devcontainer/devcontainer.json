@@ -1,0 +1,23 @@
+{
+  "name": "Go Dev Container",
+  "build": { "dockerfile": "Dockerfile" },
+  "workspaceFolder": "/workspace",
+
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "source=go-mod-cache,target=/home/vscode/go/pkg/mod,type=volume"
+  ],
+
+  "remoteUser": "vscode",
+
+  "customizations": {
+    "vscode": {
+      "extensions": ["golang.Go"],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
+    }
+  },
+
+  "postCreateCommand": "if [ ! -f go.mod ]; then go mod init project; fi && go mod tidy && go install golang.org/x/tools/gopls@v0.21.1"
+}
