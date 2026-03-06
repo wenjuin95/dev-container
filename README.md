@@ -8,11 +8,7 @@ A collection of [VS Code Dev Container](https://containers.dev/) configurations 
 
 - [What is a Dev Container?](#what-is-a-dev-container)
 - [Prerequisites](#prerequisites)
-- [Available Containers](#available-containers)
 - [Getting Started](#getting-started)
-- [Container Details](#container-details)
-  - [Go](#go)
-  - [Java](#java)
 
 ---
 
@@ -33,15 +29,6 @@ A Dev Container is a Docker-based environment defined by a `devcontainer.json` f
 | [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine on Linux) | Latest stable |
 | [Visual Studio Code](https://code.visualstudio.com/) | Latest stable |
 | [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) | Latest stable |
-
----
-
-## Available Containers
-
-| Language | Directory | Base Image |
-|----------|-----------|------------|
-| Go | [`go/`](./go) | `mcr.microsoft.com/devcontainers/go:1.25-bookworm` |
-| Java | [`java/`](./java) | `mcr.microsoft.com/devcontainers/java:21` |
 
 ---
 
@@ -78,50 +65,3 @@ A Dev Container is a Docker-based environment defined by a `devcontainer.json` f
    VS Code will build the Docker image (first run only) and attach to the container. Your workspace is mounted at `/workspace` inside the container.
 
 ---
-
-## Container Details
-
-### Go
-
-**Directory:** [`go/.devcontainer/`](./go/.devcontainer)
-
-| Item | Detail |
-|------|--------|
-| Base image | `mcr.microsoft.com/devcontainers/go:1.25-bookworm` |
-| Working directory | `/workspace` |
-| Remote user | `vscode` |
-| Cached volume | `go-mod-cache` → `/home/vscode/go/pkg/mod` |
-| VS Code extension | [Go (`golang.Go`)](https://marketplace.visualstudio.com/items?itemName=golang.Go) |
-| Default shell | `bash` |
-
-**Post-create setup**
-
-On first container start, the following is run automatically:
-
-```bash
-if [ ! -f go.mod ]; then go mod init project; fi && go mod tidy && go install golang.org/x/tools/gopls@v0.21.1
-```
-
-This initialises a Go module (if one doesn't already exist) and installs [gopls](https://pkg.go.dev/golang.org/x/tools/gopls), the official Go language server.
-
----
-
-### Java
-
-**Directory:** [`java/.devcontainer/`](./java/.devcontainer)
-
-| Item | Detail |
-|------|--------|
-| Base image | `mcr.microsoft.com/devcontainers/java:21` |
-| Working directory | `/workspace` |
-| Remote user | `vscode` |
-| Cached volume | `maven-cache` → `/home/vscode/.m2` |
-| VS Code extensions | [Language Support for Java (`redhat.java`)](https://marketplace.visualstudio.com/items?itemName=redhat.java), [Java Extension Pack (`vscjava.vscode-java-pack`)](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) |
-
-The Maven local repository is persisted in a named Docker volume (`maven-cache`) so dependencies are not re-downloaded every time the container is rebuilt.
-
----
-
-## Contributing
-
-Feel free to open an issue or pull request to add new language containers or improve existing configurations.
